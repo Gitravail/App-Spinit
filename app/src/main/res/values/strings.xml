@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Spin\'it!</string>
+    <string name="launch_msg">Tirer au sort !</string>
+</resources>
