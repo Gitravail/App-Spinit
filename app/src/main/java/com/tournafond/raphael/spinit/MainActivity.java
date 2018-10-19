@@ -1,21 +1,20 @@
 package com.tournafond.raphael.spinit;
 
-import android.content.res.Configuration;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.tournafond.raphael.spinit.adapter.ChoixAdapter;
 
@@ -32,6 +31,18 @@ public class MainActivity extends AppCompatActivity {
     private ListView mList;
     private FloatingActionButton mBtnAdd;
     private Button mBtnStart;
+
+
+
+
+
+
+    private ImageButton mFav;
+
+
+
+
+
 
     // Gestion de la liste dynamique ***************************************************************
 
@@ -60,6 +71,28 @@ public class MainActivity extends AppCompatActivity {
         mList = (ListView) findViewById(R.id.itemList);
         mBtnAdd = (FloatingActionButton) findViewById(R.id.btnAdd);
         mBtnStart = (Button) findViewById(R.id.btnStart);
+
+
+
+
+        mFav = (ImageButton) findViewById(R.id.btnFav);
+
+
+        mFav.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View v) {
+                Drawable fill = getDrawable(R.drawable.ic_favorite_fill);
+                Drawable empty = getDrawable(R.drawable.ic_favorite_empty);
+                System.out.println(mFav.getForeground() + "\n" + fill + "\n" + empty);
+                if (mFav.getForeground().equals(fill)) {
+                    mFav.setForeground(empty);
+                } else {
+                    mFav.setForeground(fill);
+                }
+
+            }
+        });
 
 
 
@@ -95,7 +128,9 @@ public class MainActivity extends AppCompatActivity {
                 int alea = (r.nextInt((arrayAdapter.getCount())));
                 // Affichage de l'element tire au sort
                 mBtnStart.setText(arrayList.get(alea));
-                //setContentView(R.layout.activity_wheel);
+                Intent wheelActivity = new Intent(MainActivity.this, WheelActivity.class);
+                wheelActivity.putExtra("chosen",arrayList.get(alea));
+                startActivity(wheelActivity);
             }
         });
 
@@ -116,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         // Ajout du nombre d'element par defaut a la liste
         for (int i = 0; i < DEFAUT_ITEM_NB; i++) {
             nbOfItems++;
-            arrayList.add("Element" + nbOfItems);
+            arrayList.add("");
         }
         // lien avec la vue
         arrayAdapter.notifyDataSetChanged();

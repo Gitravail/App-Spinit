@@ -70,17 +70,41 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
             android:descendantFocusability="beforeDescendants">
         </ListView>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/btnAdd"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:scaleX="0.7"
-            android:scaleY="0.7"
-            app:backgroundTint="@color/text"
-            app:srcCompat="@drawable/ic_add" />
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/btnAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="80dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                app:backgroundTint="@color/text"
+                app:srcCompat="@drawable/ic_add" />
+
+            <ImageButton
+                android:id="@+id/btnSave"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="80dp"
+                android:background="@color/colorPrimaryDark"
+                android:contentDescription="@string/app_name"
+                android:foreground="@drawable/ic_save" />
+            <ImageButton
+                android:id="@+id/btnFav"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@color/colorPrimaryDark"
+                android:contentDescription="@string/app_name"
+                android:foreground="@drawable/ic_favorite_empty" />
+
+        </LinearLayout>
     </LinearLayout>
 
 

@@ -1,0 +1,22 @@
+{
+	"Listes": [{
+			"nom": "Soirée",
+			"id": 1,
+			"choix": ["Cinéma", "Bar", "Chill"],
+			"bonus": true
+		},
+		{
+			"nom": "Sport",
+			"id": 2,
+			"choix": ["Karting", "Vélo", "Muscu"],
+			"bonus": true
+		},
+		{
+			"nom": "Repas",
+			"id": 3,
+			"choix": ["Burger King", "\tSalade", "Via\nde"],
+			"bonus": true
+		}
+	],
+	"Favoris": [1, 3]
+}
