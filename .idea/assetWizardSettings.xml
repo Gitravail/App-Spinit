@@ -55,7 +55,8 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="imageAsset" value="C:\Users\rapht\Desktop\backgroundVuitton.png" />
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="C:\Users\rapht\Downloads\slot-machine-png.png" />
                                       <entry key="outputName" value="ic_save" />
                                       <entry key="theme" value="HOLO_DARK" />
                                       <entry key="themeColor" value="ffffff" />
@@ -86,20 +87,26 @@
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
                                       <entry key="backgroundColor" value="007eb8" />
-                                      <entry key="backgroundLayerName" value="ic_launcher_background" />
-                                      <entry key="foregroundImage" value="C:\Users\rapht\Desktop\logoT.png" />
-                                      <entry key="foregroundLayerName" value="ic_launcher_foreground" />
-                                      <entry key="outputName" value="ic_add" />
+                                      <entry key="foregroundImage" value="C:\Users\rapht\Desktop\logo.png" />
                                     </map>
                                   </option>
                                 </PersistentState>
                               </value>
                             </entry>
-                          </map>
-                        </option>
-                        <option name="values">
-                          <map>
-                            <entry key="outputIconType" value="ACTIONBAR" />
+                            <entry key="launcherLegacy">
+                              <value>
+                                <PersistentState>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="iconShape" value="NONE" />
+                                      <entry key="imageAsset" value="C:\Users\rapht\Downloads\slot-machine-png.png" />
+                                      <entry key="outputName" value="ic_slot" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
                           </map>
                         </option>
                       </PersistentState>
@@ -125,7 +132,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_favorite_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/content/ic_add_circle_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -135,9 +142,10 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="ff0036" />
-                            <entry key="outputName" value="ic_favorite_fill" />
-                            <entry key="sourceFile" value="C:\Users\rapht" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="color" value="ffffff" />
+                            <entry key="outputName" value="ic_logo" />
+                            <entry key="sourceFile" value="C:\Users\rapht\Downloads\logoT.svg" />
                           </map>
                         </option>
                       </PersistentState>
