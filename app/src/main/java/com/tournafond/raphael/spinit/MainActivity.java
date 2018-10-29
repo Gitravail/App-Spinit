@@ -3,15 +3,20 @@ package com.tournafond.raphael.spinit;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.drawable.Drawable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import com.tournafond.raphael.spinit.adapter.ChoixAdapterHolder;
 
@@ -43,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); // Make to run your application only in portrait mode
         setContentView(R.layout.activity_main);
 
+        // Ajout des animations
+        final Animation zoom = AnimationUtils.loadAnimation(this, R.anim.zoom);
+
         // Lien avec les element du layout avec leur identifiant
         mDrawer = (DrawerLayout) findViewById(R.id.drawer);
         mBtnHam = (ImageButton) findViewById(R.id.btnHam);
@@ -56,10 +64,12 @@ public class MainActivity extends AppCompatActivity {
         mList.setAdapter(choixAdapter);
 
 
+
         // Ajout d'un evenement de clic sur le bouton d'ajout
         mBtnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.startAnimation(zoom);
                 choixAdapter.addNewItem();
                 // focus sur le dernier element de la liste
                 mList.setSelection(choixAdapter.getCount()-1);
@@ -79,6 +89,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mDrawer.openDrawer(Gravity.START);
+            }
+        });
+
+        // Ajout d'un evenement de clic sur le logo
+        mLogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.startAnimation(zoom);
             }
         });
     }
@@ -116,14 +134,15 @@ public class MainActivity extends AppCompatActivity {
             // Choix d'un indice aleatoire de la liste
             int alea = (r.nextInt((tailleListe)));
             // Selection de l'element tire au sort
-            String element = listeMots.get(alea);
+            String choisi = listeMots.get(alea);
             // Affichage de l'element tire au sort
-            mBtnStart.setText(element);
+            mBtnStart.setText(choisi);
             Intent wheelActivity = new Intent(MainActivity.this, WheelActivity.class);
-            wheelActivity.putExtra("chosen",element);
+            wheelActivity.putExtra("choisi", choisi);
+            System.out.println("test");
+            wheelActivity.putStringArrayListExtra("liste", listeMots);
             startActivity(wheelActivity);
         }
-
     }
     // *********************************************************************************************
 }

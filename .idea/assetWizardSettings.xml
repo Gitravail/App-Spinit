@@ -87,7 +87,7 @@
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
                                       <entry key="backgroundColor" value="007eb8" />
-                                      <entry key="foregroundImage" value="C:\Users\rapht\Desktop\logo.png" />
+                                      <entry key="foregroundImage" value="C:\Users\rapht\Desktop\logoTlarge.png" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -132,7 +132,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/content/ic_add_circle_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/social/ic_cake_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -144,8 +144,8 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_logo" />
-                            <entry key="sourceFile" value="C:\Users\rapht\Downloads\logoT.svg" />
+                            <entry key="outputName" value="ic_slot_machine_ps_copie" />
+                            <entry key="sourceFile" value="C:\Users\rapht\Desktop\slot-machine_PS copie.svg" />
                           </map>
                         </option>
                       </PersistentState>

@@ -7,5 +7,8 @@
     <color name="hint">#64dfdfdf</color>
     <color name="underline">#aad7d7d7</color>
     <color name="listTextColor">#f1ecec</color>
+    <color name="bonus">#9f9700</color>
+    <color name="save">#d9d9d9</color>
+    <color name="favorite">#ff0036</color>
     <color name="dark">#001e39</color>
 </resources>

@@ -1,9 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_favoris"
-            android:icon="@drawable/ic_add"
-            android:title="@string/favoris" />
-    </group>
+
+    <item
+        android:title="Favoris">
+        <menu>
+            <item
+                android:title="Favorite"/>
+            <item
+                android:title="Yolo"/>
+            <item
+                android:title="Yorfhhrhrdhrdfhrdhrhlo"/>
+            <item
+                android:title="Yoabeazrbeztlo"/>
+            <item
+                android:title="rnzebretb"/>
+            <item
+                android:title="Yoeranelo"/>
+        </menu>
+    </item>
+
+    <item
+        android:title="Enregistrés">
+        <menu>
+            <item
+                android:title="Enregistre"/>
+            <item
+                android:title="EOGJEOGEJGIREGJGI HFEFIEGILEG fdgrhrh"/>
+        </menu>
+    </item>
+
+    <item
+        android:title="Bonus">
+        <menu>
+            <item
+                android:title="Share"/>
+            <item
+                android:title="Send"/>
+        </menu>
+    </item>
+
+    <item
+        android:title="Editer"
+        android:icon="@drawable/ic_edit">
+    </item>
 </menu>

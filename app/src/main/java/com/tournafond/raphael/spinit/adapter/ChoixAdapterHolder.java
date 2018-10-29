@@ -15,16 +15,20 @@ import com.tournafond.raphael.spinit.ViewHolder;
 public class ChoixAdapterHolder extends BaseAdapter {
     private LayoutInflater mInflater;
     public ArrayList listItems = new ArrayList();
+    private ArrayList<String> init = new ArrayList<String>();
 
     private static final String PREFIXE = "Choix";
     private static final int NB_OF_ITEMS = 3;
 
     public ChoixAdapterHolder(Context context) {
+        init.add("Casino");
+        init.add("Boîte de nuit");
+        init.add("Netflix");
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         for (int i = 0; i < NB_OF_ITEMS; i++) {
             ListItem listItem = new ListItem();
             listItem.caption = PREFIXE + " " + (i + 1);
-            listItem.text = "";
+            listItem.text = init.get(i);
             listItems.add(listItem);
         }
         notifyDataSetChanged();
