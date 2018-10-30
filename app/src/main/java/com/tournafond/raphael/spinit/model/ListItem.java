@@ -1,4 +1,4 @@
-package com.tournafond.raphael.spinit;
+package com.tournafond.raphael.spinit.model;
 
 public class ListItem {
     public String text;

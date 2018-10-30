@@ -17,7 +17,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorPrimaryDark"
-    tools:context=".MainActivity">
+    tools:context=".controller.MainActivity">
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -66,14 +66,12 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_gravity="center"
             android:divider="@android:color/transparent"
             android:dividerHeight="5dp"
-            android:descendantFocusability="beforeDescendants">
-        </ListView>
+            android:descendantFocusability="beforeDescendants"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/btnAdd"
@@ -84,22 +82,15 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:contentDescription="@string/app_name"
                 android:foreground="@drawable/ic_add" />
 
-            <ImageButton
-                android:id="@+id/btnSave"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="80dp"
-                android:background="@color/colorPrimaryDark"
-                android:contentDescription="@string/app_name"
-                android:foreground="@drawable/ic_save" />
-            <ImageButton
-                android:id="@+id/btnFav"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@color/colorPrimaryDark"
-                android:contentDescription="@string/app_name"
-                android:foreground="@drawable/ic_favorite_empty" />
-
+            <Switch
+                android:id="@+id/switchPO"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:text="Personnes  "
+                android:textSize="15sp"
+                android:textColor="@color/textWhite"
+                android:layout_gravity="bottom" />
         </LinearLayout>
     </LinearLayout>
 
@@ -113,13 +104,13 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
         <Button
             android:id="@+id/btnStart"
             android:layout_width="fill_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:text="@string/launch_msg"
-            android:textColor="@color/text"
+            android:textColor="@color/textWhite"
             android:textSize="25sp"
             android:padding="10dp"
             android:background="@color/colorAccent"/>

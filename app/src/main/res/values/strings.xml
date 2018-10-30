@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Spin\'it!</string>
+    <string name="defi">Défi : </string>
     <string name="launch_msg">Tirer au sort !</string>
     <string name="favoris">Favoris</string>
     <string name="prefixe">Choix</string>
+    <string name="listeInfo">Liste des possibilités :</string>
+    <string name="participants">Ajouter les participants</string>
 </resources>
