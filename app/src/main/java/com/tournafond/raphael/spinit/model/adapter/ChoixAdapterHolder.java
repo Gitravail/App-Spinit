@@ -28,7 +28,8 @@ public class ChoixAdapterHolder extends BaseAdapter {
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         ListItem listItem;
-        Liste liste = utilisateur.getListeParDefaut();
+        //Liste liste = utilisateur.getListeParDefaut();
+        Liste liste = new Liste();
 
         this.prefixe = utilisateur.getPrefixe();
 

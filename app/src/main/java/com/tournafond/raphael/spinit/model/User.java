@@ -2,16 +2,19 @@ package com.tournafond.raphael.spinit.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 
 import java.util.ArrayList;
 
-@Entity(foreignKeys = @ForeignKey(entity = Liste.class,
-        parentColumns = "id",
-        childColumns = "listeParDefaut"))
+@Entity
 public class User {
 
-    private Liste listeParDefaut; // liste par defaut au lancement de l'app
+    @PrimaryKey
+    private long listeParDefaut; // liste par defaut au lancement de l'app
     private int typeElement; // type courant (ajout d'options ou de personnes)
+
+    public final static long PAS_DE_LISTE_PAR_DEFAUT = -1;
 
     public final static int ACTION = 0;
     public final static int PARTICIPANT = 1;
@@ -20,11 +23,12 @@ public class User {
     // Constructors ***
 
     public User() {
-        this.listeParDefaut = new Liste();
+        this.listeParDefaut = PAS_DE_LISTE_PAR_DEFAUT;
         this.typeElement = ACTION;
     }
 
-    public User(ArrayList<Liste> listesEnregistrees, Liste listeParDefaut, int typeElement) {
+    @Ignore
+    public User(int listeParDefaut, int typeElement) {
         this.listeParDefaut = listeParDefaut;
         this.typeElement = typeElement;
     }
@@ -34,11 +38,11 @@ public class User {
 
     // Get/Set ***
 
-    public Liste getListeParDefaut() {
+    public long getListeParDefaut() {
         return listeParDefaut;
     }
 
-    public void setListeParDefaut(Liste listeParDefaut) {
+    public void setListeParDefaut(long listeParDefaut) {
         this.listeParDefaut = listeParDefaut;
     }
 

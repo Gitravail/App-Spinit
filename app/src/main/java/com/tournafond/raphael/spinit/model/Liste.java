@@ -1,7 +1,11 @@
 package com.tournafond.raphael.spinit.model;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
+
+import com.tournafond.raphael.spinit.model.database.converter.ListConverter;
 
 import java.util.ArrayList;
 
@@ -12,13 +16,15 @@ public class Liste {
     private long id;
     private int type;
     private String titre;
+    @TypeConverters(ListConverter.class)
     private ArrayList<String> action;
+    @TypeConverters(ListConverter.class)
     private ArrayList<String> participant;
 
-    final static int VIDE = -1;
-    final static int FAVORI = 0;
-    final static int NORMAL = 1;
-    final static int BONUS = 2;
+    public final static int VIDE = -1;
+    public final static int FAVORI = 0;
+    public final static int NORMAL = 1;
+    public final static int BONUS = 2;
 
     public Liste() {
         this.type = VIDE;
@@ -27,11 +33,20 @@ public class Liste {
         this.participant = new ArrayList<>();;
     }
 
+    @Ignore
     public Liste(int type, String titre, ArrayList<String> action, ArrayList<String> participant) {
         this.type = type;
         this.titre = titre;
         this.action = action;
         this.participant = participant;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public int getType() {
