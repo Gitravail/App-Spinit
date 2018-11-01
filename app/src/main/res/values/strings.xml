@@ -4,6 +4,9 @@
     <string name="launch_msg">Tirer au sort !</string>
     <string name="favoris">Favoris</string>
     <string name="prefixe">Choix</string>
-    <string name="listeInfo">Liste des possibilités :</string>
-    <string name="participants">Ajouter les participants</string>
+    <string name="listeInfo">Liste des possibilités</string>
+    <string name="actions">Actions</string>
+    <string name="participants">Participants</string>
+    <string name="passerAnimation">Sauter l\'animation</string>
+    <string name="celuiQui">Voici celui qui va devoir</string>
 </resources>

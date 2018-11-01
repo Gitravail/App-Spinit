@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:weightSum="2">
+
+    <TextView
+        android:id="@+id/textAction"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textBlack"
+        android:textSize="20sp"
+        android:text="@string/app_name"
+        android:paddingEnd="10dp"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/textParticipant"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textBlack"
+        android:textSize="20sp"
+        android:text="@string/app_name"
+        android:paddingStart="10dp"
+        android:gravity="end"
+        android:layout_gravity="center"/>
+
+</LinearLayout>

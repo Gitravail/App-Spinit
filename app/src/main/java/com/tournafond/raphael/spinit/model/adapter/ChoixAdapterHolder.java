@@ -6,13 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
-import com.tournafond.raphael.spinit.model.ListItem;
+import com.tournafond.raphael.spinit.model.holder.ListItem;
 import com.tournafond.raphael.spinit.R;
 import java.util.ArrayList;
 
 import com.tournafond.raphael.spinit.model.Liste;
 import com.tournafond.raphael.spinit.model.User;
-import com.tournafond.raphael.spinit.model.ViewHolder;
+import com.tournafond.raphael.spinit.model.holder.ViewHolder;
 
 
 public class ChoixAdapterHolder extends BaseAdapter {
@@ -21,12 +21,10 @@ public class ChoixAdapterHolder extends BaseAdapter {
     private String prefixe;
 
     private static final int NB_OF_ITEMS = 3;
+    public static final int ACTION = 0;
+    public static final int PARTICIPANT = 1;
 
-    public ChoixAdapterHolder(Context context, User utilisateur) {
-        ArrayList<String> init = new ArrayList<>();
-        init.add("Casino");
-        init.add("Boîte de nuit");
-        init.add("Netflix");
+    public ChoixAdapterHolder(Context context, User utilisateur, int type) {
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         ListItem listItem;
@@ -39,16 +37,53 @@ public class ChoixAdapterHolder extends BaseAdapter {
             for (int i = 0; i < NB_OF_ITEMS; i++) {
                 listItem = new ListItem();
                 listItem.caption = prefixe + " " + (i + 1);
-                listItem.text = init.get(i);
+                listItem.text = "";
                 listItems.add(listItem);
             }
         } else {
-            int taille = liste.getListeMots().size();
+            ArrayList<String> listeType;
+            if (type == PARTICIPANT) {
+                listeType = liste.getParticipant();
+            } else {
+                listeType = liste.getAction();
+            }
+            int taille = listeType.size();
             for (int i = 0; i < taille; i++) {
                 listItem = new ListItem();
                 listItem.caption = prefixe + " " + (i + 1);
-                listItem.text = liste.getListeMots().get(i);
+                listItem.text = listeType.get(i);
                 listItems.add(listItem);
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public ChoixAdapterHolder(Context context, String prefixe, ArrayList<String> list) {
+        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        ListItem listItem;
+        this.prefixe = prefixe;
+
+        listItems = new ArrayList<>();
+
+        if (list.isEmpty()) {
+            for (int i = 0; i < NB_OF_ITEMS; i++) {
+                listItem = new ListItem();
+                listItem.caption = prefixe + " " + (i + 1);
+                listItem.text = "";
+                listItems.add(listItem);
+            }
+        } else {
+            int taille = list.size();
+            String current;
+            for (int i = 0; i < taille; i++) {
+                current = list.get(i);
+                if (!current.isEmpty()) {
+                    listItem = new ListItem();
+                    listItem.caption = prefixe + " " + (i + 1);
+                    listItem.text = current;
+                    listItems.add(listItem);
+                }
             }
         }
         notifyDataSetChanged();
@@ -87,7 +122,7 @@ public class ChoixAdapterHolder extends BaseAdapter {
             holder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.item, null);
             holder.caption = convertView
-                    .findViewById(R.id.ItemCaption);
+                    .findViewById(R.id.itemCaption);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -111,5 +146,23 @@ public class ChoixAdapterHolder extends BaseAdapter {
             }
         });
         return convertView;
+
+    }
+
+    public ArrayList<ListItem> getItemList() {
+        return listItems;
+    }
+
+    public ArrayList<String> getList() {
+        ArrayList<String> list = new ArrayList<>();
+        int taille = getItemList().size();
+        String current;
+        for (int i = 0; i < taille; i++) {
+            current = getItemList().get(i).toString();
+            if (!current.isEmpty()) {
+                list.add(getItemList().get(i).toString());
+            }
+        }
+        return list;
     }
 }

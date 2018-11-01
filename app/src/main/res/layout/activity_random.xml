@@ -5,19 +5,87 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/background_vuitton"
+    android:background="@color/colorPrimary"
     tools:context=".controller.MainActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="2"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/colorAccent">
 
-    <ImageButton
-        android:id="@+id/btnReturn"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="-5dp"
-        android:layout_marginTop="15dp"
-        android:background="@color/transparent"
-        android:contentDescription="@string/app_name"
-        android:foreground="@drawable/ic_arrow" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary">
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/btnReturn"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="-5dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/transparent"
+                android:contentDescription="@string/app_name"
+                android:foreground="@drawable/ic_arrow" />
+
+            <TextView
+                android:id="@+id/textCeluiQui"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:textStyle="bold"
+                android:textColor="@color/textWhite"
+                android:textSize="20sp"
+                android:text="@string/celuiQui"
+                android:layout_marginStart="20dp"
+                android:layout_gravity="bottom"
+                android:shadowColor="@color/textBlack"
+                android:shadowDy="10"
+                android:shadowDx="10"
+                android:shadowRadius="10"/>
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/textAction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:textStyle="bold"
+            android:textColor="@color/textWhite"
+            android:textSize="22sp"
+            android:text="@string/celuiQui"
+            android:shadowColor="@color/textBlack"
+            android:shadowDy="10"
+            android:shadowDx="10"
+            android:shadowRadius="10"
+            android:textAllCaps="true"
+            android:layout_gravity="center"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"/>
+
+    </LinearLayout>
+
 
     <ImageView
         android:layout_width="wrap_content"
@@ -44,7 +112,7 @@
             android:textSize="35sp"
             android:textStyle="bold"
             android:gravity="center"
-            android:text="UPPER ONE"
+            android:text=""
             android:layout_gravity="center"
             android:singleLine="true"/>
 
@@ -59,7 +127,7 @@
             android:textStyle="bold"
             android:gravity="center"
             android:paddingVertical="20dp"
-            android:text="CHOSEN ONE"
+            android:text=""
             android:layout_gravity="center"
             android:singleLine="true"/>
 
@@ -73,7 +141,7 @@
             android:textSize="35sp"
             android:textStyle="bold"
             android:gravity="center"
-            android:text="LOWER ONE"
+            android:text=""
             android:layout_gravity="center"
             android:singleLine="true"/>
     </LinearLayout>
@@ -92,5 +160,37 @@
         android:src="@drawable/slot_gradient"
         android:contentDescription="@string/app_name"
         android:layout_gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="50dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/passerAnimation"
+            android:textSize="20sp"
+            android:textColor="@color/textWhite"
+            android:textStyle="italic|bold"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
+            android:layout_gravity="center"
+            android:shadowColor="@color/textBlack"
+            android:shadowDy="10"
+            android:shadowDx="10"
+            android:shadowRadius="10"
+            android:textAllCaps="true"/>
+
+        <ImageButton
+            android:id="@+id/btnPasser"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:foreground="@drawable/avance_rapide"
+            android:background="@color/transparent"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+
 
 </FrameLayout>

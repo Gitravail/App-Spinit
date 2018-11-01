@@ -1,8 +1,15 @@
 package com.tournafond.raphael.spinit.model;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import java.util.ArrayList;
 
+@Entity
 public class Liste {
+
+    @PrimaryKey(autoGenerate = true)
+    private long id;
     private int type;
     private String titre;
     private ArrayList<String> action;

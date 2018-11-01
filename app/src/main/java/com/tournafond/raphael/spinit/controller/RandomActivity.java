@@ -6,14 +6,16 @@ import android.content.pm.ActivityInfo;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.tournafond.raphael.spinit.model.OnSwipeListener;
+import com.tournafond.raphael.spinit.model.listener.OnSwipeListener;
 import com.tournafond.raphael.spinit.R;
 
 import java.util.ArrayList;
@@ -23,18 +25,38 @@ import java.util.Random;
 public class RandomActivity extends AppCompatActivity {
 
     private ImageButton mBtnReturn;
+    private ImageButton mBtnPasser;
+
+    private TextView mTextCeluiQui;
+    private TextView mTextAction;
+
     private ImageView mSlot;
     private TextView mText1;
     private TextView mText2;
     private TextView mText3;
+
     private String saveText1;
     private long duration;
-    Random r = new Random();
-    ArrayList<String> listeMots;
+    private Random r = new Random();
 
-    final long START_DURATION = 20;
-    final long STEP_DURATION = 5;
-    final long END_DURATION = 120;
+    private ArrayList<String> listeEnCours;
+    private ArrayList<String> listeAction;
+    private ArrayList<String> listeParticipant;
+
+    private boolean doisJouerAction;
+    private boolean doisJouerParticipant;
+    private boolean sauvegardeAction;
+    private boolean sauvegardeParticipant;
+    private String resultatAction;
+    private String resultatParticipant;
+
+    public static final long START_DURATION = 20;
+    public static final long STEP_DURATION = 5;
+    public static final long END_DURATION = 120;
+    public static final int START_DELAY = 1000;
+    public static final int BETWEEN_DELAY = 2000;
+
+    private boolean mEnableTouchEvent;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -44,22 +66,31 @@ public class RandomActivity extends AppCompatActivity {
         setContentView(R.layout.activity_random);
 
         mBtnReturn = findViewById(R.id.btnReturn);
+        mBtnPasser = findViewById(R.id.btnPasser);
+
+        mTextCeluiQui = findViewById(R.id.textCeluiQui);
+        mTextAction = findViewById(R.id.textAction);
+
         mSlot = findViewById(R.id.slot);
         mText1 = findViewById(R.id.text_1);
         mText2 = findViewById(R.id.text_2);
         mText3 = findViewById(R.id.text_3);
 
-        listeMots = getIntent().getStringArrayListExtra("liste");
+        mEnableTouchEvent = true;
 
-        Collections.shuffle(listeMots);
+        // Ajout des animations
+        final Animation zoom = AnimationUtils.loadAnimation(this, R.anim.zoom);
 
-        mText1.setText(listeMots.get(0));
-        mText2.setText(listeMots.get(1));
-        if (listeMots.size() > 2) {
-            mText3.setText(listeMots.get(2));
-        } else {
-            mText3.setText(listeMots.get(0));
-        }
+        listeAction = getIntent().getStringArrayListExtra("listeAction");
+        listeParticipant = getIntent().getStringArrayListExtra("listeParticipant");
+
+        Collections.shuffle(listeAction);
+        Collections.shuffle(listeParticipant);
+
+        doisJouerParticipant = !listeParticipant.isEmpty();
+        mTextCeluiQui.setVisibility(View.INVISIBLE);
+        mTextAction.setVisibility(View.INVISIBLE);
+        doisJouerAction = true;
 
         mSlot.setOnTouchListener(new OnSwipeListener(this) {
             public void onSwipeBottom() {
@@ -70,19 +101,48 @@ public class RandomActivity extends AppCompatActivity {
         mBtnReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.startAnimation(zoom);
                 finish();
             }
         });
 
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        mBtnPasser.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                startAnimation();
+            public void onClick(View v) {
+                v.startAnimation(zoom);
+                // Choix d'un indice aleatoire de la liste
+                int aleaAction = (r.nextInt((listeAction.size())));
+                resultatAction = listeAction.get(aleaAction);
+                if (listeParticipant.size() > 0) {
+                    int aleaParticipant = (r.nextInt((listeParticipant.size())));
+                    resultatParticipant = listeParticipant.get(aleaParticipant);
+                } else {
+                    resultatParticipant = "";
+                }
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent resultActivity = new Intent(RandomActivity.this, ResultActivity.class);
+                        resultActivity.putStringArrayListExtra("listeAction", listeAction);
+                        resultActivity.putStringArrayListExtra("listeParticipant", listeParticipant);
+                        resultActivity.putExtra("resultatAction", resultatAction);
+                        resultActivity.putExtra("resultatParticipant", resultatParticipant);
+                        startActivity(resultActivity);
+                        finish();
+                    }
+                }, 500);
             }
-        }, 1000);
+        });
 
+        initialiseChampsEtAnime();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        final Animation text_zoom = AnimationUtils.loadAnimation(this, R.anim.text_zoom);
+        mBtnPasser.startAnimation(text_zoom);
     }
 
     // Gestion du mode immersif ********************************************************************
@@ -137,25 +197,37 @@ public class RandomActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                mEnableTouchEvent = false;
+
+                if (sauvegardeAction) {
+                    resultatAction = (String) mText2.getText();
+                    sauvegardeAction = false;
+                    if (doisJouerParticipant) {
+                        mTextCeluiQui.setVisibility(View.VISIBLE);
+                        mTextAction.setText(resultatAction);
+                        mTextAction.setVisibility(View.VISIBLE);
+                    }
+                }
+                if (sauvegardeParticipant) {
+                    resultatParticipant = (String) mText2.getText();
+                    sauvegardeParticipant = false;
+                }
+
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Intent resultActivity = new Intent(RandomActivity.this, ResultActivity.class);
-                        resultActivity.putStringArrayListExtra("liste", listeMots);
-                        resultActivity.putExtra("resultat", mText2.getText());
-                        startActivity(resultActivity);
-                        finish();
+                        initialiseChampsEtAnime();
                     }
-                }, 1000);
+                }, BETWEEN_DELAY);
             }
 
             @Override
             public void onAnimationRepeat(Animation animation) {
                 // Choix d'un indice aleatoire de la liste
-                int alea = (r.nextInt((listeMots.size())));
+                int alea = (r.nextInt((listeEnCours.size())));
                 // Selection de l'element tire au sort
-                mText1.setText(listeMots.get(alea));
+                mText1.setText(listeEnCours.get(alea));
                 mText3.setText(mText2.getText());
                 mText2.setText(saveText1);
                 saveText1 = (String) mText1.getText();
@@ -169,5 +241,82 @@ public class RandomActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void initialiseChampsEtAnime() {
+        if (doisJouerAction) {
+            doisJouerAction = false;
+            int tailleListeAction = listeAction.size();
+            boolean plusDUn = tailleListeAction > 1;
+            if (plusDUn) {
+                mText1.setText(listeAction.get(0));
+                mText2.setText(listeAction.get(1));
+                if (tailleListeAction > 2) {
+                    mText3.setText(listeAction.get(2));
+                }
+                sauvegardeAction = true;
+                sauvegardeParticipant = false;
+                listeEnCours = listeAction;
+                lanceAnimationDelay(START_DELAY);
+            } else {
+                sauvegardeAction = true;
+                sauvegardeParticipant = false;
+                resultatAction = listeAction.get(0);
+                sauvegardeAction = false;
+                if (doisJouerParticipant) {
+                    mTextCeluiQui.setVisibility(View.VISIBLE);
+                    mTextAction.setText(resultatAction);
+                    mTextAction.setVisibility(View.VISIBLE);
+                }
+                initialiseChampsEtAnime();
+            }
+            mEnableTouchEvent = true;
+        } else if (doisJouerParticipant) {
+            doisJouerParticipant = false;
+            int tailleListeParticipant = listeParticipant.size();
+            if (tailleListeParticipant > 0) {
+                mText1.setText(listeParticipant.get(0));
+                if (tailleListeParticipant > 1) {
+                    mText2.setText(listeParticipant.get(1));
+                    if (tailleListeParticipant > 2) {
+                        mText3.setText(listeParticipant.get(2));
+                    }
+                }
+            }
+            sauvegardeAction = false;
+            sauvegardeParticipant = true;
+            listeEnCours = listeParticipant;
+            mEnableTouchEvent = true;
+            lanceAnimationDelay(0);
+        } else {
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent resultActivity = new Intent(RandomActivity.this, ResultActivity.class);
+                    resultActivity.putStringArrayListExtra("listeAction", listeAction);
+                    resultActivity.putStringArrayListExtra("listeParticipant", listeParticipant);
+                    resultActivity.putExtra("resultatAction", resultatAction);
+                    resultActivity.putExtra("resultatParticipant", resultatParticipant);
+                    startActivity(resultActivity);
+                    finish();
+                }
+            }, 1000);
+        }
+    }
+
+    private void lanceAnimationDelay(int delay) {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startAnimation();
+            }
+        }, delay);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return mEnableTouchEvent && super.dispatchTouchEvent(ev);
     }
 }

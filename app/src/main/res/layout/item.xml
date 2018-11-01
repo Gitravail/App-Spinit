@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <EditText android:id="@+id/ItemCaption"
+    <EditText android:id="@+id/itemCaption"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:layout_marginLeft="70dp"
@@ -13,7 +13,8 @@
         android:singleLine="true"
         android:textColorHint="@color/hint"
         android:textColor="@color/textWhite"
-        android:inputType="textAutoComplete|textAutoCorrect">
+        android:inputType="textAutoComplete|textAutoCorrect"
+        android:maxLength="75">
     </EditText>
 
 </LinearLayout>

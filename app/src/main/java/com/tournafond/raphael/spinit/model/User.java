@@ -1,29 +1,30 @@
 package com.tournafond.raphael.spinit.model;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
+
 import java.util.ArrayList;
 
+@Entity(foreignKeys = @ForeignKey(entity = Liste.class,
+        parentColumns = "id",
+        childColumns = "listeParDefaut"))
 public class User {
 
-    private ArrayList<Liste> listesEnregistrees; // listes enregistres par l'utilisateur
-    private Liste listeCourante; // liste en cours
     private Liste listeParDefaut; // liste par defaut au lancement de l'app
     private int typeElement; // type courant (ajout d'options ou de personnes)
 
-    public final static int PERSONNE = 0;
-    public final static int OPTION = 1;
+    public final static int ACTION = 0;
+    public final static int PARTICIPANT = 1;
+    public static final int OPTION = 2;
 
     // Constructors ***
 
     public User() {
-        this.listesEnregistrees = new ArrayList<Liste>();
-        this.listeCourante = new Liste();
-        this.listeParDefaut = listeCourante;
-        this.typeElement = OPTION;
+        this.listeParDefaut = new Liste();
+        this.typeElement = ACTION;
     }
 
-    public User(ArrayList<Liste> listesEnregistrees, Liste listeCourante, Liste listeParDefaut, int typeElement) {
-        this.listesEnregistrees = listesEnregistrees;
-        this.listeCourante = listeCourante;
+    public User(ArrayList<Liste> listesEnregistrees, Liste listeParDefaut, int typeElement) {
         this.listeParDefaut = listeParDefaut;
         this.typeElement = typeElement;
     }
@@ -32,22 +33,6 @@ public class User {
 
 
     // Get/Set ***
-
-    public ArrayList<Liste> getListesEnregistrees() {
-        return listesEnregistrees;
-    }
-
-    public void setListesEnregistrees(ArrayList<Liste> listesEnregistrees) {
-        this.listesEnregistrees = listesEnregistrees;
-    }
-
-    public Liste getListeCourante() {
-        return listeCourante;
-    }
-
-    public void setListeCourante(Liste listeCourante) {
-        this.listeCourante = listeCourante;
-    }
 
     public Liste getListeParDefaut() {
         return listeParDefaut;
@@ -65,54 +50,17 @@ public class User {
         this.typeElement = typeElement;
     }
 
-    // additional get
-    public ArrayList<Liste> getFavoris() {
-        ArrayList<Liste> res = new ArrayList<Liste>();
-        Liste courante;
-        int taille = this.listesEnregistrees.size();
-        for (int i = 0; i < taille; i++) {
-            courante = listesEnregistrees.get(i);
-            if (courante.estFavori()) {
-                res.add(courante);
-            }
-        }
-        return res;
-    }
-
-    public ArrayList<Liste> getNormal() {
-        ArrayList<Liste> res = new ArrayList<Liste>();
-        Liste courante;
-        int taille = this.listesEnregistrees.size();
-        for (int i = 0; i < taille; i++) {
-            courante = listesEnregistrees.get(i);
-            if (courante.estNormal()) {
-                res.add(courante);
-            }
-        }
-        return res;
-    }
-
-    public ArrayList<Liste> getBonus() {
-        ArrayList<Liste> res = new ArrayList<Liste>();
-        Liste courante;
-        int taille = this.listesEnregistrees.size();
-        for (int i = 0; i < taille; i++) {
-            courante = listesEnregistrees.get(i);
-            if (courante.estBonus()) {
-                res.add(courante);
-            }
-        }
-        return res;
-    }
-
     public String getPrefixe() {
         String res;
-        switch (typeElement) {
-            case OPTION:
+        switch (getTypeElement()) {
+            case ACTION:
                 res = "Action";
                 break;
-            case PERSONNE:
+            case PARTICIPANT:
                 res = "Participant";
+                break;
+            case OPTION:
+                res = "Option";
                 break;
             default:
                 res = "Choix";

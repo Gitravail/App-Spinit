@@ -1,4 +1,4 @@
-package com.tournafond.raphael.spinit.model;
+package com.tournafond.raphael.spinit.model.listener;
 
 import android.content.Context;
 import android.view.GestureDetector;

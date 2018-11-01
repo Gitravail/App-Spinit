@@ -1,4 +1,4 @@
-package com.tournafond.raphael.spinit.model;
+package com.tournafond.raphael.spinit.model.holder;
 
 import android.widget.EditText;
 

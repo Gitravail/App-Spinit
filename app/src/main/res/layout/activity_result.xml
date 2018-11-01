@@ -6,54 +6,125 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".controller.ResultActivity"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/colorPrimaryDark"
+    android:weightSum="2">
 
-    <ImageButton
-        android:id="@+id/btnReturn"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="-5dp"
-        android:layout_marginTop="15dp"
-        android:background="@color/transparent"
-        android:contentDescription="@string/app_name"
-        android:foreground="@drawable/ic_arrow"/>
-
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textSize="50sp"
-        android:gravity="center"/>
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:background="@color/colorPrimary">
 
-    <TextView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp">
+
+            <ImageButton
+                android:id="@+id/btnReturn"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="-5dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/transparent"
+                android:contentDescription="@string/app_name"
+                android:foreground="@drawable/ic_arrow"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right|bottom">
+                <ImageButton
+                    android:id="@+id/btnSave"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/transparent"
+                    android:contentDescription="@string/app_name"
+                    android:foreground="@drawable/ic_save"
+                    android:gravity="right"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="@color/dark"
+            android:orientation="vertical"
+            android:paddingTop="10dp">
+            <TextView
+                android:id="@+id/textParticipant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textSize="30sp"
+                android:shadowColor="@color/textBlack"
+                android:shadowDy="5"
+                android:shadowDx="5"
+                android:shadowRadius="5"
+                android:textColor="@color/textWhite"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/textAction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textSize="30sp"
+                android:shadowColor="@color/textBlack"
+                android:shadowDy="5"
+                android:shadowDx="5"
+                android:shadowRadius="5"
+                android:textColor="@color/textWhite"
+                android:gravity="center"
+                android:paddingBottom="20dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textSize="50sp"
-        android:gravity="center"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="@color/colorAccent">
 
-    <ImageButton
-        android:id="@+id/saveButton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="15dp"
-        android:background="@color/transparent"
-        android:contentDescription="@string/app_name"
-        android:layout_gravity="end"
-        android:foreground="@drawable/ic_save" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:text="@string/listeInfo"
-        android:textColor="@color/textWhite"
-        android:textSize="20sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="@string/actions"
+                android:textColor="@color/textWhite"
+                android:textSize="20sp" />
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+            <TextView
+                android:id="@+id/textListParticipant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:text="@string/participants"
+                android:textColor="@color/textWhite"
+                android:textSize="20sp"
+                android:gravity="end"/>
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:descendantFocusability="beforeDescendants" />
+    </LinearLayout>
 
 </LinearLayout>
