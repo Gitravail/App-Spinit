@@ -1,33 +1,21 @@
 package com.tournafond.raphael.spinit.controller;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.ClipData;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.view.Gravity;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.tournafond.raphael.spinit.R;
@@ -39,22 +27,15 @@ import com.tournafond.raphael.spinit.view.ListeViewModel;
 import com.tournafond.raphael.spinit.view.adapter.MainListeAdapter;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class EditListActivity extends AppCompatActivity {
 
     // Creation des elements en lien avec le layout
-    private DrawerLayout mDrawer; // Menu gauche
-    private ImageButton mBtnHam; // Bouton d'ouverture du drawer
     private ImageButton mBtnSave; // Bouton de sauvegarde de la liste
-    private ImageView mLogo; // logo de l'application
     private ImageButton mBtnAdd; // bouton d'ajout d'un element
     private ImageButton mBtnDelete; // bouton de suppression d'une liste
-    private Button mBtnStart; // bouton de lancement du tirage au sort
-    private Switch mSwitch; // choix d'ajouter des participants (deux tirages)
+    private ImageButton mBtnReturn; // bouton de retour
 
-    private LinearLayout mBtnEdit; // Layout clicable pour editer les listes
     private LinearLayout mLayoutAP; // layout contenant le menu action/participant
     private Button mBtnAction; // bouton pour le choix d'edition des actions
     private Button mBtnParticipant; // bouton pour le choix d'edition des participants
@@ -63,15 +44,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ListView mList;
     private MainListeAdapter mMainListeAdapter;
 
-    private User utilisateur = new User();
     private ArrayList<String> listeAction = new ArrayList<>();
     private ArrayList<String> listeParticipant = new ArrayList<>();
 
+    private User utilisateur = new User();
+    private Liste liste;
     public static final int ACTION = 0;
     public static final int PARTICPANT = 1;
     public static final int OPTION = 2;
 
-    private static final int EDIT_ACTIVITY_REQUEST_CODE = 20;
+    private static final int EDIT_LIST_ACTIVITY_REQUEST_CODE = 20;
 
 
     // Lors du lancement de l'app
@@ -79,24 +61,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); // Make to run your application only in portrait mode
-        setContentView(R.layout.activity_main);
-        setNavigationViewListener();
+        setContentView(R.layout.activity_edit_list);
 
 
         // Ajout des animations
         final Animation zoom = AnimationUtils.loadAnimation(this, R.anim.zoom);
 
         // Lien avec les element du layout avec leur identifiant
-        mDrawer = findViewById(R.id.drawer);
-        mBtnHam = findViewById(R.id.btnHam);
         mBtnSave = findViewById(R.id.btnSave);
-        mLogo = findViewById(R.id.logo);
         mBtnAdd = findViewById(R.id.btnAdd);
         mBtnDelete = findViewById(R.id.btnDelete);
-        mBtnStart = findViewById(R.id.btnStart);
-        mSwitch = findViewById(R.id.switchPO);
+        mBtnReturn = findViewById(R.id.btnReturn);
 
-        mBtnEdit = findViewById(R.id.btnEdit);
         mLayoutAP = findViewById(R.id.layoutAP);
         mBtnAction = findViewById(R.id.btnAction);
         mBtnParticipant = findViewById(R.id.btnParticipant);
@@ -107,8 +83,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mMainListeAdapter = new MainListeAdapter(this, utilisateur, MainListeAdapter.ACTION);
         mList.setAdapter(mMainListeAdapter);
 
-        mLayoutAP.setVisibility(LinearLayout.GONE);
+        mLayoutAP.setVisibility(LinearLayout.VISIBLE);
+        liste = (Liste) getIntent().getSerializableExtra("Liste");
         setOption();
+
+        listeAction = liste.getAction();
+        listeParticipant = liste.getParticipant();
+        mMainListeAdapter = new MainListeAdapter(getApplicationContext(), utilisateur.getPrefixe(), listeAction);
+        mList.setAdapter(mMainListeAdapter);
 
         // Ajout d'un evenement de clic sur le bouton d'edition des actions
         mBtnAction.setOnClickListener(new View.OnClickListener() {
@@ -141,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        // Ajout d'un evenement de clic sur le bouton de suppression
         mBtnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,49 +134,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        // Ajout d'un evenement de clic sur le bouton principal
-        mBtnStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mActionParticipant == ACTION || mActionParticipant == OPTION) {
-                    listeAction = mMainListeAdapter.getList();
-                } else {
-                    listeParticipant = mMainListeAdapter.getList();
-                }
-                System.out.println(listeAction);
-                Set<String> set = new LinkedHashSet<>(listeAction);
-                listeAction.clear();
-                listeAction.addAll(set);
-                System.out.println(listeAction);
-                System.out.println(listeParticipant);
-                set = new LinkedHashSet<>(listeParticipant);
-                listeParticipant.clear();
-                listeParticipant.addAll(set);
-                System.out.println(listeParticipant);
-                if (mActionParticipant == ACTION || mActionParticipant == OPTION) {
-                    mMainListeAdapter = new MainListeAdapter(MainActivity.this, utilisateur.getPrefixe(), listeAction);
-                } else {
-                    mMainListeAdapter = new MainListeAdapter(MainActivity.this, utilisateur.getPrefixe(), listeParticipant);
-                }
-                mList.setAdapter(mMainListeAdapter);
-                gereChoix();
-            }
-        });
-
-        // Ajout d'un evenement de clic pour le menu hamburger
-        mBtnHam.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDrawer.openDrawer(Gravity.START);
-            }
-        });
-
-        // Ajout d'un evenement de clic sur le logo
-        mLogo.setOnClickListener(new View.OnClickListener() {
+        // Ajout d'un evenement de clic pour le retour
+        mBtnReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 v.startAnimation(zoom);
-                getBonusList();
+                finish();
             }
         });
 
@@ -203,37 +149,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View v) {
                 if (listeValide()) {
                     v.startAnimation(zoom);
-                    sauvegarderListe();
+                    gereSauvegarde();
                 }
-            }
-        });
-
-        // Ajout d'un evenement de clic pour le switch
-        mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    mLayoutAP.setVisibility(LinearLayout.VISIBLE);
-                    if (mActionParticipant != ACTION) {
-                        setAction();
-                    }
-                } else {
-                    mLayoutAP.setVisibility(LinearLayout.GONE);
-                    if (mActionParticipant != OPTION) {
-                        setOption();
-                    }
-                }
-            }
-        });
-
-        // Ajout d'un evenement de clic pour edit
-        mBtnEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent editActivity = new Intent(MainActivity.this, EditActivity.class);
-                startActivityForResult(editActivity, EDIT_ACTIVITY_REQUEST_CODE);
-                //close navigation drawer
-                mDrawer.closeDrawer(GravityCompat.START);
             }
         });
     }
@@ -249,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int tailleListeAction = listeAction.size();
         int tailleListeParticipant = listeParticipant.size();
 
-        if (mSwitch.isChecked()) {
+        if (tailleListeParticipant > 0) {
             if (tailleListeAction >= 1) {
                 if (tailleListeParticipant >= 2) {
                     return true;
@@ -269,9 +186,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return false;
     }
 
-    private void gereChoix() {
+    private void gereSauvegarde() {
         if (listeValide()) {
-            lanceResult();
+            sauvegarderListe();
         }
     }
     // *********************************************************************************************
@@ -363,39 +280,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .setNegativeButton("Non", deleteYesNo).show();
     }
 
-    private void lanceResult() {
-        Intent wheelActivity = new Intent(MainActivity.this, RandomActivity.class);
-        wheelActivity.putStringArrayListExtra("listeAction", listeAction);
-        if (!mSwitch.isChecked()) {
-            listeParticipant = new ArrayList<>();
+    DialogInterface.OnClickListener changerTitre = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which){
+                case DialogInterface.BUTTON_POSITIVE:
+                    sauvegarderListeTitre();
+                    break;
+
+                case DialogInterface.BUTTON_NEGATIVE:
+                    if (mActionParticipant == ACTION || mActionParticipant == OPTION) {
+                        listeAction = mMainListeAdapter.getList();
+                    } else {
+                        listeParticipant = mMainListeAdapter.getList();
+                    }
+                    liste.setAction(listeAction);
+                    liste.setParticipant(listeParticipant);
+                    updateListe(liste);
+                    Toast.makeText(EditListActivity.this, "La liste a bien été enregistré", Toast.LENGTH_SHORT).show();
+                    break;
+            }
         }
-        wheelActivity.putStringArrayListExtra("listeParticipant", listeParticipant);
-        startActivity(wheelActivity);
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
-        switch (item.getItemId()) {
-
-        }
-        //close navigation drawer
-        mDrawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    private void setNavigationViewListener() {
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-    }
+    };
 
     private void sauvegarderListe() {
-        Liste liste = new Liste();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(liste.getTitre()).setMessage("Voulez-vous modifier le titre ?").setPositiveButton("Oui", changerTitre)
+                .setNegativeButton("Non", changerTitre).show();
+    }
+
+    private void sauvegarderListeTitre() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         final EditText edittext = new EditText(this);
         edittext.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         edittext.setFilters(new InputFilter[] {new InputFilter.LengthFilter(20)});
-        alert.setTitle("Titre de la nouvelle liste");
+        alert.setTitle("Nouveau titre");
 
         alert.setView(edittext);
 
@@ -409,13 +328,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         listeParticipant = mMainListeAdapter.getList();
                     }
                     liste.setTitre(text);
-                    liste.setType(Liste.NORMAL);
                     liste.setAction(listeAction);
                     liste.setParticipant(listeParticipant);
-                    insererListe(liste);
-                    Toast.makeText(MainActivity.this, "La liste a bien été enregistré", Toast.LENGTH_SHORT).show();
+                    updateListe(liste);
+                    Toast.makeText(EditListActivity.this, "La liste a bien été enregistré", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(MainActivity.this, "Veuillez entrer un titre valide", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditListActivity.this, "Veuillez entrer un titre valide", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -425,50 +343,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
         });
-
         alert.show();
     }
 
-    private void insererListe(Liste liste) {
+    private void updateListe(Liste liste) {
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
         ListeViewModel mListeViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ListeViewModel.class);
-        mListeViewModel.createListe(liste);
-    }
-
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (EDIT_ACTIVITY_REQUEST_CODE == requestCode && RESULT_OK == resultCode) {
-            // Fetch the score from the Intent
-            Liste liste = (Liste) data.getSerializableExtra(EditActivity.BUNDLE_LISTE);
-            listeAction = liste.getAction();
-            listeParticipant = liste.getParticipant();
-            if (mActionParticipant == ACTION || mActionParticipant == OPTION) {
-                mMainListeAdapter = new MainListeAdapter(getApplicationContext(), utilisateur.getPrefixe(), listeAction);
-                mList.setAdapter(mMainListeAdapter);
-            } else {
-                mMainListeAdapter = new MainListeAdapter(getApplicationContext(), utilisateur.getPrefixe(), listeParticipant);
-                mList.setAdapter(mMainListeAdapter);
-            }
-        }
-    }
-
-    private void getBonusList() {
-        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
-        ListeViewModel mListeViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ListeViewModel.class);
-        Liste liste = new Liste();
-        liste.setTitre("Foot");
-        liste.setType(Liste.BONUS);
-        mListeViewModel.createListe(liste);
-        liste = new Liste();
-        liste.setTitre("Bonus avec un long nom, très long");
-        liste.setType(Liste.BONUS);
-        mListeViewModel.createListe(liste);
-        liste = new Liste();
-        liste.setTitre("Drôle");
-        liste.setType(Liste.BONUS);
-        mListeViewModel.createListe(liste);
+        System.out.println(liste);
+        mListeViewModel.updateListe(liste);
     }
 }

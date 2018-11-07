@@ -51,6 +51,21 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:foreground="@drawable/ic_launcher"
                 android:background="@drawable/background_logo" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end">
+            <ImageButton
+                android:id="@+id/btnSave"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/transparent"
+                android:contentDescription="@string/app_name"
+                android:foreground="@drawable/ic_save"
+                android:gravity="right"/>
+        </LinearLayout>
     </RelativeLayout>
 
     <LinearLayout
@@ -161,6 +176,35 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:fitsSystemWindows="true"
-    app:menu="@menu/drawer_view" />
+    app:menu="@menu/drawer_view">
 
+    <LinearLayout
+        android:id="@+id/btnEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="horizontal"
+        android:background="@color/textWhite">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_edit"
+            android:backgroundTint="@color/textBlack"
+            android:layout_gravity="center|end"
+            android:layout_marginEnd="10dp"/>
+
+        <TextView
+            android:text="Editer"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="20sp"
+            android:layout_marginEnd="20dp"
+            android:textColor="@color/textBlack"
+            android:gravity="center|end"/>
+    </LinearLayout>
+
+</android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>

@@ -7,10 +7,11 @@ import android.arch.persistence.room.TypeConverters;
 
 import com.tournafond.raphael.spinit.database.converter.ListConverter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 @Entity
-public class Liste {
+public class Liste implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private long id;
@@ -95,5 +96,33 @@ public class Liste {
 
     public boolean estBonus() {
         return this.getType() == BONUS;
+    }
+
+    private String prefixe(int type) {
+        String res;
+        switch (type) {
+            case FAVORI:
+                res = "Favori";
+                break;
+            case NORMAL:
+                res = "Normal";
+                break;
+            case BONUS:
+                res = "Bonus";
+                break;
+            default:
+                res = "Autre type de liste";
+        }
+        return res;
+    }
+
+    public String toString() {
+        String strRes = "";
+        strRes += "Id : " + getId() + "\n";
+        strRes += "Type : " + prefixe(getType()) + "\n";
+        strRes += "Titre : " + getTitre() + "\n";
+        strRes += "Actions : " + getAction() + "\n";
+        strRes += "Participants : " + getParticipant() + "\n";
+        return strRes;
     }
 }

@@ -1,15 +1,26 @@
 package com.tournafond.raphael.spinit.controller;
 
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tournafond.raphael.spinit.R;
+import com.tournafond.raphael.spinit.injections.Injection;
+import com.tournafond.raphael.spinit.injections.ViewModelFactory;
+import com.tournafond.raphael.spinit.model.Liste;
+import com.tournafond.raphael.spinit.view.ListeViewModel;
 import com.tournafond.raphael.spinit.view.holder.ListDualItem;
 import com.tournafond.raphael.spinit.view.adapter.ResultListeAdapter;
 
@@ -66,7 +77,7 @@ public class ResultActivity extends AppCompatActivity {
         }
         if (!resultatParticipant.equals("")) {
             resultatAction = resultatAction.substring(0,1).toLowerCase() + resultatAction.substring(1);
-            resultatAction = "dois " + resultatAction + ".";
+            resultatAction = "doit " + resultatAction + ".";
             if (resultatParticipant.length() > 20) {
                 resultatParticipant = resultatParticipant.substring(0,1).toUpperCase() + resultatParticipant.substring(1, 20);
             } else {
@@ -97,11 +108,12 @@ public class ResultActivity extends AppCompatActivity {
             }
         });
 
+        // Ajout d'un evenement de clic pour la sauvegarde
         mBtnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 v.startAnimation(zoom);
-                sauvegardeListe();
+                sauvegarderListe();
             }
         });
 
@@ -166,7 +178,44 @@ public class ResultActivity extends AppCompatActivity {
         return listDualItemArrayList;
     }
 
-    private void sauvegardeListe() {
+    private void sauvegarderListe() {
+        Liste liste = new Liste();
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        final EditText edittext = new EditText(this);
+        edittext.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+        edittext.setFilters(new InputFilter[] {new InputFilter.LengthFilter(20)});
+        alert.setTitle("Titre de la nouvelle liste");
 
+        alert.setView(edittext);
+
+        alert.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String text = edittext.getText().toString();
+                if (!text.equals(""))  {
+                    liste.setTitre(text);
+                    liste.setType(Liste.NORMAL);
+                    liste.setAction(listeAction);
+                    liste.setParticipant(listeParticipant);
+                    insererListe(liste);
+                    Toast.makeText(ResultActivity.this, "La liste a bien été enregistré", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ResultActivity.this, "Veuillez entrer un titre valide", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        alert.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+            }
+        });
+
+        alert.show();
+    }
+
+    private void insererListe(Liste liste) {
+        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
+        ListeViewModel mListeViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ListeViewModel.class);
+        mListeViewModel.createListe(liste);
     }
 }

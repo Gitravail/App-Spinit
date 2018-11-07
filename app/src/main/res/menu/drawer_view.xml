@@ -5,17 +5,15 @@
         android:title="Favoris">
         <menu>
             <item
-                android:title="Favorite"/>
+                android:title="Exemple"/>
             <item
-                android:title="Yolo"/>
+                android:title="Exemple"/>
             <item
-                android:title="Yorfhhrhrdhrdfhrdhrhlo"/>
+                android:title="Exemple"/>
             <item
-                android:title="Yoabeazrbeztlo"/>
+                android:title="Exemple"/>
             <item
-                android:title="rnzebretb"/>
-            <item
-                android:title="Yoeranelo"/>
+                android:title="Exemple"/>
         </menu>
     </item>
 
@@ -23,9 +21,13 @@
         android:title="Enregistrés">
         <menu>
             <item
-                android:title="Enregistre"/>
+                android:title="Exemple"/>
             <item
-                android:title="EOGJEOGEJGIREGJGI HFEFIEGILEG fdgrhrh"/>
+                android:title="Exemple"/>
+            <item
+                android:title="Exemple"/>
+            <item
+                android:title="Exemple"/>
         </menu>
     </item>
 
@@ -33,15 +35,14 @@
         android:title="Bonus">
         <menu>
             <item
-                android:title="Share"/>
+                android:title="Exemple"/>
             <item
-                android:title="Send"/>
+                android:title="Exemple"/>
+            <item
+                android:title=""/>
+            <item
+                android:title=""/>
         </menu>
     </item>
 
-    <item
-        android:id="@+id/editBtn"
-        android:title="Editer"
-        android:icon="@drawable/ic_edit">
-    </item>
 </menu>

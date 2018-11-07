@@ -15,7 +15,7 @@ import java.util.List;
 public interface ListeDao {
 
 
-        @Query("SELECT * FROM Liste")
+        @Query("SELECT * FROM Liste ORDER BY type")
         LiveData<List<Liste>> getListes();
 
         @Insert(onConflict = OnConflictStrategy.REPLACE)

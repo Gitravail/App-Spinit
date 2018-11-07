@@ -22,7 +22,8 @@
         </activity>
         <activity android:name=".controller.RandomActivity" />
         <activity android:name=".controller.ResultActivity" />
-        <activity android:name=".controller.EditActivity"></activity>
+        <activity android:name=".controller.EditActivity" />
+        <activity android:name=".controller.EditListActivity"></activity>
     </application>
 
 </manifest>

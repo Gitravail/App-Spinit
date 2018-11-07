@@ -53,8 +53,6 @@ public class ListeDaoTest {
     private static Liste NEW_LIST_BONUS = new Liste(Liste.BONUS, "Une liste normale", ACTION_LIST_1, PART_LIST_1);
     private static Liste NEW_LIST_FAVORITE = new Liste(Liste.BONUS, "Une liste normale", ACTION_LIST_2, PART_LIST_1);
 
-    private static User NEW_USER = new User(1, User.ACTION);
-
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
@@ -94,7 +92,6 @@ public class ListeDaoTest {
     @Test
     public void insertAndUpdateItem() throws InterruptedException {
         // BEFORE : Adding demo user & demo items. Next, update item added & re-save it
-        this.database.userDao().createUser(NEW_USER);
         this.database.listeDao().insertListe(NEW_LIST_NORMAL_WITHOUT_PART);
         Liste listeAdded = LiveDataTestUtil.getValue(this.database.listeDao().getListes()).get(0);
         listeAdded.setType(Liste.FAVORI);
@@ -106,23 +103,8 @@ public class ListeDaoTest {
     }
 
     @Test
-    public void addDefaultList() throws InterruptedException {
-        // BEFORE : Adding demo user & demo list. Next, get list id and add default.
-        this.database.userDao().createUser(NEW_USER);
-        this.database.listeDao().insertListe(NEW_LIST_FAVORITE);
-        Liste listeAdded = LiveDataTestUtil.getValue(this.database.listeDao().getListes()).get(0);
-        NEW_USER.setListeParDefaut(listeAdded.getId());
-        this.database.userDao().updateUser(NEW_USER);
-
-        //TEST
-        User user = LiveDataTestUtil.getValue(this.database.userDao().getUser());
-        assertTrue(user.getListeParDefaut() == listeAdded.getId());
-    }
-
-    @Test
     public void insertAndDeleteItem() throws InterruptedException {
         // BEFORE : Adding demo user & demo item. Next, get the item added & delete it.
-        this.database.userDao().createUser(NEW_USER);
         this.database.listeDao().insertListe(NEW_LIST_FAVORITE);
         Liste listeAdded = LiveDataTestUtil.getValue(this.database.listeDao().getListes()).get(0);
         this.database.listeDao().deleteListe(listeAdded.getId());

@@ -1,11 +1,16 @@
 package com.tournafond.raphael.spinit.controller;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
 
 import com.tournafond.raphael.spinit.R;
 import com.tournafond.raphael.spinit.injections.Injection;
@@ -14,15 +19,15 @@ import com.tournafond.raphael.spinit.model.Liste;
 import com.tournafond.raphael.spinit.utils.ItemClickSupport;
 import com.tournafond.raphael.spinit.view.ListeViewModel;
 import com.tournafond.raphael.spinit.view.adapter.EditListeAdapter;
+import com.tournafond.raphael.spinit.view.adapter.MainListeAdapter;
 
 import java.util.List;
-
-import butterknife.BindView;
 
 
 public class EditActivity extends AppCompatActivity implements EditListeAdapter.Listener {
 
     // FOR DESIGN
+    private ImageButton mBtnReturn;
     private RecyclerView mRecyclerView;
 
     //FOR DATA
@@ -30,6 +35,10 @@ public class EditActivity extends AppCompatActivity implements EditListeAdapter.
     private EditListeAdapter mEditListeAdapter;
 
     private List<Liste> listes;
+
+    public static final String BUNDLE_LISTE = "BUNDLE_LISTE";
+
+    public static final int EDIT_LISTE_REQUEST_CODE = 21;
 
 
     @Override
@@ -39,12 +48,25 @@ public class EditActivity extends AppCompatActivity implements EditListeAdapter.
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_edit);
 
+        mBtnReturn = findViewById(R.id.btnReturn);
+
+        //Animation
+        final Animation zoom = AnimationUtils.loadAnimation(this, R.anim.zoom);
+
         mRecyclerView = findViewById(R.id.fragment_main_recycler_view);
 
         this.configureRecyclerView();
         this.configureViewModel();
 
         this.getListes();
+
+        mBtnReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.startAnimation(zoom);
+                finish();
+            }
+        });
     }
 
     // ACTIONS
@@ -74,19 +96,28 @@ public class EditActivity extends AppCompatActivity implements EditListeAdapter.
         this.mListeViewModel.getListes().observe(this, this::updateListesList);
     }
 
-    /*Create a new liste*/
-    private void createListe() {
-
-    }
-
     /*Delete a liste*/
-    private void deleteListe(Liste liste) {
+    public void deleteListe(Liste liste) {
         this.mListeViewModel.deleteListe(liste.getId());
     }
 
     /*Update a liste*/
     private void updateListe(Liste liste) {
         this.mListeViewModel.updateListe(liste);
+    }
+
+    /*Load liste in main activity*/
+    public void chargeListe(Liste liste) {
+        Intent mainactivity = new Intent();
+        mainactivity.putExtra(BUNDLE_LISTE, liste);
+        setResult(RESULT_OK, mainactivity);
+        finish();
+    }
+
+    public void modifierListe(Liste liste) {
+        Intent editListActivity = new Intent(EditActivity.this, EditListActivity.class);
+        editListActivity.putExtra("Liste", liste);
+        startActivityForResult(editListActivity, EDIT_LISTE_REQUEST_CODE);
     }
 
     // UI
@@ -104,8 +135,12 @@ public class EditActivity extends AppCompatActivity implements EditListeAdapter.
         this.mEditListeAdapter.updateData(listes);
     }
 
-
-
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (EDIT_LISTE_REQUEST_CODE == requestCode && RESULT_OK == resultCode) {
+            getListes();
+        }
+    }
 
 }
