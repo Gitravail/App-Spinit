@@ -1,4 +1,4 @@
-package com.tournafond.raphael.spinit.model.adapter;
+package com.tournafond.raphael.spinit.view.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,15 +8,15 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.tournafond.raphael.spinit.R;
-import com.tournafond.raphael.spinit.model.holder.ListDualItem;
+import com.tournafond.raphael.spinit.view.holder.ListDualItem;
 
 import java.util.ArrayList;
 
-public class DualTextViewAdapter extends ArrayAdapter<ListDualItem> {
+public class ResultListeAdapter extends ArrayAdapter<ListDualItem> {
 
     private int layoutResource;
 
-    public DualTextViewAdapter(Context context, int layoutResource, ArrayList<ListDualItem> ldi) {
+    public ResultListeAdapter(Context context, int layoutResource, ArrayList<ListDualItem> ldi) {
         super(context, layoutResource, ldi);
         this.layoutResource = layoutResource;
     }

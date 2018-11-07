@@ -15,7 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.tournafond.raphael.spinit.model.listener.OnSwipeListener;
+import com.tournafond.raphael.spinit.listener.OnSwipeListener;
 import com.tournafond.raphael.spinit.R;
 
 import java.util.ArrayList;

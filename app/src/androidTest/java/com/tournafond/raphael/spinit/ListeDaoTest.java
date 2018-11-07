@@ -2,13 +2,12 @@ package com.tournafond.raphael.spinit;
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule;
 import android.arch.persistence.room.Room;
-import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.tournafond.raphael.spinit.model.Liste;
 import com.tournafond.raphael.spinit.model.User;
-import com.tournafond.raphael.spinit.model.database.SpinItDatabase;
+import com.tournafond.raphael.spinit.database.SpinItDatabase;
 
 import org.junit.After;
 import org.junit.Before;

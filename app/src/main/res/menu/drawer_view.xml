@@ -40,6 +40,7 @@
     </item>
 
     <item
+        android:id="@+id/editBtn"
         android:title="Editer"
         android:icon="@drawable/ic_edit">
     </item>

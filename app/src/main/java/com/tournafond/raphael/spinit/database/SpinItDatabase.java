@@ -1,4 +1,4 @@
-package com.tournafond.raphael.spinit.model.database;
+package com.tournafond.raphael.spinit.database;
 
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
@@ -12,8 +12,8 @@ import android.support.annotation.NonNull;
 import com.google.gson.Gson;
 import com.tournafond.raphael.spinit.model.Liste;
 import com.tournafond.raphael.spinit.model.User;
-import com.tournafond.raphael.spinit.model.database.dao.ListeDao;
-import com.tournafond.raphael.spinit.model.database.dao.UserDao;
+import com.tournafond.raphael.spinit.database.dao.ListeDao;
+import com.tournafond.raphael.spinit.database.dao.UserDao;
 
 import java.util.ArrayList;
 

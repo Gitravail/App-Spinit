@@ -1,4 +1,4 @@
-package com.tournafond.raphael.spinit.model.database.dao;
+package com.tournafond.raphael.spinit.database.dao;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;

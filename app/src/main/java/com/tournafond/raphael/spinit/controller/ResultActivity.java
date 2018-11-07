@@ -10,8 +10,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.tournafond.raphael.spinit.R;
-import com.tournafond.raphael.spinit.model.holder.ListDualItem;
-import com.tournafond.raphael.spinit.model.adapter.DualTextViewAdapter;
+import com.tournafond.raphael.spinit.view.holder.ListDualItem;
+import com.tournafond.raphael.spinit.view.adapter.ResultListeAdapter;
 
 import java.util.ArrayList;
 
@@ -85,7 +85,7 @@ public class ResultActivity extends AppCompatActivity {
         // Gestion de la liste des possibilités ***
         ArrayList<ListDualItem> listDualItemArrayList = new ArrayList<>();
         listDualItemArrayList = creeListDualItem();
-        DualTextViewAdapter dtva = new DualTextViewAdapter(this, R.layout.dual_item, listDualItemArrayList);
+        ResultListeAdapter dtva = new ResultListeAdapter(this, R.layout.dual_item, listDualItemArrayList);
         mList.setAdapter(dtva);
         // ***
 
@@ -101,7 +101,7 @@ public class ResultActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 v.startAnimation(zoom);
-                //sauvegardeListe();
+                sauvegardeListe();
             }
         });
 
@@ -164,5 +164,9 @@ public class ResultActivity extends AppCompatActivity {
             listDualItemArrayList.add(ldi);
         }
         return listDualItemArrayList;
+    }
+
+    private void sauvegardeListe() {
+
     }
 }

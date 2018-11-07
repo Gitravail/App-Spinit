@@ -5,7 +5,7 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
-import com.tournafond.raphael.spinit.model.database.converter.ListConverter;
+import com.tournafond.raphael.spinit.database.converter.ListConverter;
 
 import java.util.ArrayList;
 

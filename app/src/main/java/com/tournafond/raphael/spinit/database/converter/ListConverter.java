@@ -1,11 +1,10 @@
-package com.tournafond.raphael.spinit.model.database.converter;
+package com.tournafond.raphael.spinit.database.converter;
 
 import android.arch.persistence.room.TypeConverter;
 
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ListConverter {
     @TypeConverter

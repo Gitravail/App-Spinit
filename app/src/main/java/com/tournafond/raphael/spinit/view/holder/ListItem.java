@@ -1,4 +1,4 @@
-package com.tournafond.raphael.spinit.model.holder;
+package com.tournafond.raphael.spinit.view.holder;
 
 public class ListItem {
     public String text;

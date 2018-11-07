@@ -1,4 +1,4 @@
-package com.tournafond.raphael.spinit.model.adapter;
+package com.tournafond.raphael.spinit.view.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,16 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
-import com.tournafond.raphael.spinit.model.holder.ListItem;
+import com.tournafond.raphael.spinit.view.holder.ListItem;
 import com.tournafond.raphael.spinit.R;
 import java.util.ArrayList;
 
 import com.tournafond.raphael.spinit.model.Liste;
 import com.tournafond.raphael.spinit.model.User;
-import com.tournafond.raphael.spinit.model.holder.ViewHolder;
+import com.tournafond.raphael.spinit.view.holder.ViewHolder;
 
 
-public class ChoixAdapterHolder extends BaseAdapter {
+public class MainListeAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private ArrayList<ListItem> listItems = new ArrayList<>();
     private String prefixe;
@@ -24,7 +24,7 @@ public class ChoixAdapterHolder extends BaseAdapter {
     public static final int ACTION = 0;
     public static final int PARTICIPANT = 1;
 
-    public ChoixAdapterHolder(Context context, User utilisateur, int type) {
+    public MainListeAdapter(Context context, User utilisateur, int type) {
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         ListItem listItem;
@@ -59,7 +59,7 @@ public class ChoixAdapterHolder extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public ChoixAdapterHolder(Context context, String prefixe, ArrayList<String> list) {
+    public MainListeAdapter(Context context, String prefixe, ArrayList<String> list) {
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         ListItem listItem;

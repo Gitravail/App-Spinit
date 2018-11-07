@@ -21,7 +21,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".controller.RandomActivity" />
-        <activity android:name=".controller.ResultActivity"></activity>
+        <activity android:name=".controller.ResultActivity" />
+        <activity android:name=".controller.EditActivity"></activity>
     </application>
 
 </manifest>

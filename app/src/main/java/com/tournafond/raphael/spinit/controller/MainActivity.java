@@ -1,15 +1,18 @@
 package com.tournafond.raphael.spinit.controller;
 
-import android.app.Activity;
-import android.content.Context;
+import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -23,13 +26,13 @@ import android.widget.Switch;
 
 import com.tournafond.raphael.spinit.R;
 import com.tournafond.raphael.spinit.model.User;
-import com.tournafond.raphael.spinit.model.adapter.ChoixAdapterHolder;
+import com.tournafond.raphael.spinit.view.adapter.MainListeAdapter;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     // Creation des elements en lien avec le layout
     private DrawerLayout mDrawer; // Menu gauche
@@ -46,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private int mActionParticipant;
 
     private ListView mList;
-    private ChoixAdapterHolder choixAdapter;
+    private MainListeAdapter mMainListeAdapter;
 
     private User utilisateur = new User();
     private ArrayList<String> listeAction = new ArrayList<>();
@@ -63,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); // Make to run your application only in portrait mode
         setContentView(R.layout.activity_main);
+        setNavigationViewListener();
 
 
         // Ajout des animations
@@ -84,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
 
         mList = findViewById(R.id.itemList);
         mList.setItemsCanFocus(true);
-        choixAdapter = new ChoixAdapterHolder(this, utilisateur, ChoixAdapterHolder.ACTION);
-        mList.setAdapter(choixAdapter);
+        mMainListeAdapter = new MainListeAdapter(this, utilisateur, MainListeAdapter.ACTION);
+        mList.setAdapter(mMainListeAdapter);
 
         mLayoutAP.setVisibility(LinearLayout.GONE);
         setOption();
@@ -115,9 +119,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 v.startAnimation(zoom);
-                choixAdapter.addNewItem();
+                mMainListeAdapter.addNewItem();
                 // focus sur le dernier element de la liste
-                mList.setSelection(choixAdapter.getCount()-1);
+                mList.setSelection(mMainListeAdapter.getCount()-1);
             }
         });
 
@@ -125,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 v.startAnimation(zoom);
-                if (!choixAdapter.getList().isEmpty()) {
+                if (!mMainListeAdapter.getList().isEmpty()) {
                     dialogOuiNon("Voulez vous vraiment supprimer le contenu de cette liste ?");
                 }
             }
@@ -136,9 +140,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (mActionParticipant == ACTION || mActionParticipant == OPTION) {
-                    listeAction = choixAdapter.getList();
+                    listeAction = mMainListeAdapter.getList();
                 } else {
-                    listeParticipant = choixAdapter.getList();
+                    listeParticipant = mMainListeAdapter.getList();
                 }
                 System.out.println(listeAction);
                 Set<String> set = new LinkedHashSet<>(listeAction);
@@ -151,11 +155,11 @@ public class MainActivity extends AppCompatActivity {
                 listeParticipant.addAll(set);
                 System.out.println(listeParticipant);
                 if (mActionParticipant == ACTION || mActionParticipant == OPTION) {
-                    choixAdapter = new ChoixAdapterHolder(MainActivity.this, utilisateur.getPrefixe(), listeAction);
+                    mMainListeAdapter = new MainListeAdapter(MainActivity.this, utilisateur.getPrefixe(), listeAction);
                 } else {
-                    choixAdapter = new ChoixAdapterHolder(MainActivity.this, utilisateur.getPrefixe(), listeParticipant);
+                    mMainListeAdapter = new MainListeAdapter(MainActivity.this, utilisateur.getPrefixe(), listeParticipant);
                 }
-                mList.setAdapter(choixAdapter);
+                mList.setAdapter(mMainListeAdapter);
                 gereChoix();
             }
         });
@@ -198,9 +202,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void gereChoix() {
         if (mActionParticipant == ACTION || mActionParticipant == OPTION) {
-            listeAction = choixAdapter.getList();
+            listeAction = mMainListeAdapter.getList();
         } else {
-            listeParticipant = choixAdapter.getList();
+            listeParticipant = mMainListeAdapter.getList();
         }
         int tailleListeAction = listeAction.size();
         int tailleListeParticipant = listeParticipant.size();
@@ -234,15 +238,15 @@ public class MainActivity extends AppCompatActivity {
         mBtnAction.setTextColor(getResources().getColor(R.color.textWhite));
         utilisateur.setTypeElement(User.ACTION);
         if (mActionParticipant == OPTION) {
-            listeAction = choixAdapter.getList();
-            choixAdapter = new ChoixAdapterHolder(this, utilisateur.getPrefixe(), listeAction);
+            listeAction = mMainListeAdapter.getList();
+            mMainListeAdapter = new MainListeAdapter(this, utilisateur.getPrefixe(), listeAction);
         } else if (mActionParticipant == PARTICPANT) {
-            listeParticipant = choixAdapter.getList();
-            choixAdapter = new ChoixAdapterHolder(this, utilisateur.getPrefixe(), listeAction);
+            listeParticipant = mMainListeAdapter.getList();
+            mMainListeAdapter = new MainListeAdapter(this, utilisateur.getPrefixe(), listeAction);
         }
         mActionParticipant = ACTION;
-        choixAdapter.setPrefixe(utilisateur.getPrefixe());
-        mList.setAdapter(choixAdapter);
+        mMainListeAdapter.setPrefixe(utilisateur.getPrefixe());
+        mList.setAdapter(mMainListeAdapter);
     }
 
     private void setParticipant() {
@@ -252,24 +256,24 @@ public class MainActivity extends AppCompatActivity {
         mBtnParticipant.setTextColor(getResources().getColor(R.color.textWhite));
         mActionParticipant = PARTICPANT;
         utilisateur.setTypeElement(User.PARTICIPANT);
-        listeAction = choixAdapter.getList();
-        choixAdapter = new ChoixAdapterHolder(this, utilisateur.getPrefixe(), listeParticipant);
-        choixAdapter.setPrefixe(utilisateur.getPrefixe());
-        mList.setAdapter(choixAdapter);
+        listeAction = mMainListeAdapter.getList();
+        mMainListeAdapter = new MainListeAdapter(this, utilisateur.getPrefixe(), listeParticipant);
+        mMainListeAdapter.setPrefixe(utilisateur.getPrefixe());
+        mList.setAdapter(mMainListeAdapter);
     }
 
     private void setOption() {
         utilisateur.setTypeElement(User.OPTION);
         if (mActionParticipant == ACTION) {
-            listeAction = choixAdapter.getList();
-            choixAdapter = new ChoixAdapterHolder(this, utilisateur.getPrefixe(), listeAction);
+            listeAction = mMainListeAdapter.getList();
+            mMainListeAdapter = new MainListeAdapter(this, utilisateur.getPrefixe(), listeAction);
         } else if (mActionParticipant == PARTICPANT) {
-            listeParticipant = choixAdapter.getList();
-            choixAdapter = new ChoixAdapterHolder(this, utilisateur.getPrefixe(), listeAction);
+            listeParticipant = mMainListeAdapter.getList();
+            mMainListeAdapter = new MainListeAdapter(this, utilisateur.getPrefixe(), listeAction);
         }
         mActionParticipant = OPTION;
-        choixAdapter.setPrefixe(utilisateur.getPrefixe());
-        mList.setAdapter(choixAdapter);
+        mMainListeAdapter.setPrefixe(utilisateur.getPrefixe());
+        mList.setAdapter(mMainListeAdapter);
     }
 
     private void afficheDialog(String message) {
@@ -290,12 +294,12 @@ public class MainActivity extends AppCompatActivity {
                 case DialogInterface.BUTTON_POSITIVE:
                     if (mActionParticipant == ACTION || mActionParticipant == OPTION) {
                         listeAction.clear();
-                        choixAdapter = new ChoixAdapterHolder(getApplicationContext(), utilisateur.getPrefixe(), listeAction);
-                        mList.setAdapter(choixAdapter);
+                        mMainListeAdapter = new MainListeAdapter(getApplicationContext(), utilisateur.getPrefixe(), listeAction);
+                        mList.setAdapter(mMainListeAdapter);
                     } else {
                         listeParticipant.clear();
-                        choixAdapter = new ChoixAdapterHolder(getApplicationContext(), utilisateur.getPrefixe(), listeParticipant);
-                        mList.setAdapter(choixAdapter);
+                        mMainListeAdapter = new MainListeAdapter(getApplicationContext(), utilisateur.getPrefixe(), listeParticipant);
+                        mList.setAdapter(mMainListeAdapter);
                     }
                     break;
 
@@ -320,5 +324,26 @@ public class MainActivity extends AppCompatActivity {
         }
         wheelActivity.putStringArrayListExtra("listeParticipant", listeParticipant);
         startActivity(wheelActivity);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Handle navigation view item clicks here.
+        switch (item.getItemId()) {
+
+            case R.id.editBtn: {
+                Intent editActivity = new Intent(MainActivity.this, EditActivity.class);
+                startActivity(editActivity);
+                break;
+            }
+        }
+        //close navigation drawer
+        mDrawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    private void setNavigationViewListener() {
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 }

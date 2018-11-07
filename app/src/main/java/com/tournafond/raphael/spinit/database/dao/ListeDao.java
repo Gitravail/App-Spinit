@@ -1,4 +1,4 @@
-package com.tournafond.raphael.spinit.model.database.dao;
+package com.tournafond.raphael.spinit.database.dao;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
@@ -24,6 +24,6 @@ public interface ListeDao {
         @Update
         int updateListe(Liste liste);
 
-        @Query("DELETE FROM Liste WHERE id = :itemId")
-        int deleteListe(long itemId);
+        @Query("DELETE FROM Liste WHERE id = :listId")
+        int deleteListe(long listId);
 }
