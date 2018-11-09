@@ -1,7 +1,7 @@
 package com.tournafond.raphael.spinit.model;
 
 
-
+// Utilisateur (sauvegarde de preferences et etat courant)
 public class User {
     private int typeElement; // type courant (ajout d'options ou de personnes)
 

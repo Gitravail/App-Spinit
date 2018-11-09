@@ -16,6 +16,7 @@ import com.tournafond.raphael.spinit.view.holder.ListeEditViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
+// Adapter pour la recycler view du menu des listes
 public class EditListeAdapter extends RecyclerView.Adapter<ListeEditViewHolder> {
 
     Context context;

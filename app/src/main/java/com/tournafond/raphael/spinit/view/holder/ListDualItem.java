@@ -1,5 +1,6 @@
 package com.tournafond.raphael.spinit.view.holder;
 
+// Deux element dans un listview
 public class ListDualItem {
     private String action;
     private String participant;

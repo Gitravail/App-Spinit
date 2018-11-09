@@ -152,6 +152,7 @@ public class ResultActivity extends AppCompatActivity {
 
     // *********************************************************************************************
 
+    // liste double
     private ArrayList<ListDualItem> creeListDualItem() {
         ArrayList<ListDualItem> listDualItemArrayList = new ArrayList<>();
         int tailleAction = listeAction.size();

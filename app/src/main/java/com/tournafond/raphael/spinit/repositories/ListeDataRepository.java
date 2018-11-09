@@ -7,6 +7,9 @@ import com.tournafond.raphael.spinit.model.Liste;
 
 import java.util.List;
 
+
+// Le but du repository est d'isoler la source de données (DAO) du ViewModel
+// afin que ce dernier ne manipule pas directement la source de données
 public class ListeDataRepository {
     private final ListeDao listeDao;
 
@@ -14,6 +17,8 @@ public class ListeDataRepository {
 
     // --- GET ---
 
+    // LiveData, type qui permet "d'observer" plus facilement les changements
+    // tout en respectant le cycle de vie de notre application
     public LiveData<List<Liste>> getListes(){ return this.listeDao.getListes(); }
 
     // --- CREATE ---

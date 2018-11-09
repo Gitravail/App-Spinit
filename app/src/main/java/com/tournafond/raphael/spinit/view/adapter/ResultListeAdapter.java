@@ -12,6 +12,7 @@ import com.tournafond.raphael.spinit.view.holder.ListDualItem;
 
 import java.util.ArrayList;
 
+// affichage sur la liste final (action et participants)
 public class ResultListeAdapter extends ArrayAdapter<ListDualItem> {
 
     private int layoutResource;

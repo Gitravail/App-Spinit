@@ -14,7 +14,7 @@ import com.tournafond.raphael.spinit.model.Liste;
 import com.tournafond.raphael.spinit.model.User;
 import com.tournafond.raphael.spinit.view.holder.ViewHolder;
 
-
+// Adapter de la listview d'ajout d'elements
 public class MainListeAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private ArrayList<ListItem> listItems = new ArrayList<>();
@@ -28,7 +28,7 @@ public class MainListeAdapter extends BaseAdapter {
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         ListItem listItem;
-        //Liste liste = utilisateur.getListeParDefaut();
+        //Liste liste = utilisateur.getListeParDefaut(); (ajout d'une liste par defaut plus tard)
         Liste liste = new Liste();
 
         this.prefixe = utilisateur.getPrefixe();
@@ -90,9 +90,9 @@ public class MainListeAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    // ecrit la caption en fonction du prefixe courant (option, action, participant)
     public void setPrefixe(String prefixe) {
         this.prefixe = prefixe;
-        ListItem listItem;
         int taille = listItems.size();
         for (int i = 0; i < taille; i++) {
             listItems.get(i).caption = this.prefixe + " " + (i + 1);
@@ -100,6 +100,7 @@ public class MainListeAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    // ajout d'un item dans la liste
     public void addNewItem() {
         ListItem listItem = new ListItem();
         listItem.caption = prefixe + " " + (this.getCount()+1);
@@ -108,15 +109,19 @@ public class MainListeAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    // nombre d'items
     public int getCount() {
         return listItems.size();
     }
 
+    // recuperation de l'item courant
     @Override
     public Object getItem(int position) { return listItems.get(position); }
 
+    // position de l'item
     public long getItemId(int position) { return position; }
 
+    // lien avec la vue
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
@@ -135,6 +140,7 @@ public class MainListeAdapter extends BaseAdapter {
         holder.caption.setId(position);
 
         //we need to update adapter once we finish with editing
+        //ici le probleme est que l'update n'est pas effectue apres chaque entre clavier
         holder.caption.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus){

@@ -10,7 +10,7 @@ import android.arch.persistence.room.Update;
 import com.tournafond.raphael.spinit.model.Liste;
 
 import java.util.List;
-
+// permet d'effectuer les requetes en bdd
 @Dao
 public interface ListeDao {
 

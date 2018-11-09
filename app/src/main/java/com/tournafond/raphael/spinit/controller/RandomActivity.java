@@ -138,6 +138,7 @@ public class RandomActivity extends AppCompatActivity {
         initialiseChampsEtAnime();
     }
 
+    // animation lors du lancement de la page (une fois chargee)
     @Override
     protected void onResume() {
         super.onResume();
@@ -179,6 +180,7 @@ public class RandomActivity extends AppCompatActivity {
     // *********************************************************************************************
 
 
+    // gestion de l'animation
     private void startAnimation() {
         TranslateAnimation spin = new TranslateAnimation(0,0,-80,80);
         spin.setRepeatCount(Animation.INFINITE);
@@ -305,6 +307,7 @@ public class RandomActivity extends AppCompatActivity {
         }
     }
 
+    // ajout d'un delay pour un lancement une fois l'activite chargee
     private void lanceAnimationDelay(int delay) {
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -315,6 +318,7 @@ public class RandomActivity extends AppCompatActivity {
         }, delay);
     }
 
+    // on bloque le clic lors du lancement d'une activite (pour pas la lancer deux fois)
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         return mEnableTouchEvent && super.dispatchTouchEvent(ev);

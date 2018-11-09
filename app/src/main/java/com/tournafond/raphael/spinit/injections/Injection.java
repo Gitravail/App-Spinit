@@ -8,6 +8,7 @@ import com.tournafond.raphael.spinit.repositories.ListeDataRepository;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+// Injection des dependances (complexe)
 public class Injection {
 
     public static ListeDataRepository provideListeDataSource(Context context) {

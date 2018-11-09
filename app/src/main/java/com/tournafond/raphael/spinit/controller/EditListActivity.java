@@ -53,8 +53,6 @@ public class EditListActivity extends AppCompatActivity {
     public static final int PARTICPANT = 1;
     public static final int OPTION = 2;
 
-    private static final int EDIT_LIST_ACTIVITY_REQUEST_CODE = 20;
-
 
     // Lors du lancement de l'app
     @Override
@@ -157,6 +155,7 @@ public class EditListActivity extends AppCompatActivity {
 
     // Gestion du choix ****************************************************************************
 
+    // Test si la Liste est valide
     private boolean listeValide() {
         if (mActionParticipant == ACTION || mActionParticipant == OPTION) {
             listeAction = mMainListeAdapter.getList();
@@ -186,6 +185,7 @@ public class EditListActivity extends AppCompatActivity {
         return false;
     }
 
+    // Gestion de la sauvegarde de la liste (uniquement si elle est valide)
     private void gereSauvegarde() {
         if (listeValide()) {
             sauvegarderListe();
@@ -280,6 +280,8 @@ public class EditListActivity extends AppCompatActivity {
                 .setNegativeButton("Non", deleteYesNo).show();
     }
 
+    // *********************************************************************************************
+
     DialogInterface.OnClickListener changerTitre = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
@@ -303,12 +305,14 @@ public class EditListActivity extends AppCompatActivity {
         }
     };
 
+    // saugarder une liste
     private void sauvegarderListe() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(liste.getTitre()).setMessage("Voulez-vous modifier le titre ?").setPositiveButton("Oui", changerTitre)
                 .setNegativeButton("Non", changerTitre).show();
     }
 
+    // si on veut changer le titre
     private void sauvegarderListeTitre() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         final EditText edittext = new EditText(this);
@@ -346,10 +350,10 @@ public class EditListActivity extends AppCompatActivity {
         alert.show();
     }
 
+    // update de la liste en bdd
     private void updateListe(Liste liste) {
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
         ListeViewModel mListeViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ListeViewModel.class);
-        System.out.println(liste);
         mListeViewModel.updateListe(liste);
     }
 }

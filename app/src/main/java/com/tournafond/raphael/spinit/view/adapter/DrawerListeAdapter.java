@@ -13,6 +13,7 @@ import com.tournafond.raphael.spinit.view.holder.ListeDrawerViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
+// Debut d'implementation de l'adapter pour le drawer mais non termine
 public class DrawerListeAdapter extends RecyclerView.Adapter<ListeDrawerViewHolder> {
 
     // CALLBACK

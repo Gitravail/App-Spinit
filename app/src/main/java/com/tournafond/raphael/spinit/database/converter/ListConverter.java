@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
+// permet de convertir les liste d'action et de participant
 public class ListConverter {
     @TypeConverter
     public ArrayList<String> JSONStringToArrayList(String value) {

@@ -3,6 +3,8 @@ package com.tournafond.raphael.spinit.utils;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+// Implemente pour le clic sur les differents elements de la recycler view
+// code recupere sur internet et adapte
 public class ItemClickSupport {
     private final RecyclerView mRecyclerView;
     private OnItemClickListener mOnItemClickListener;

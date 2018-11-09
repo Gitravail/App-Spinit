@@ -13,6 +13,7 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+// Debut du holder pour le drawer
 public class ListeDrawerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     @BindView(R.id.drawer_item_text)

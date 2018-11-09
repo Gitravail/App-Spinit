@@ -19,7 +19,6 @@ import com.tournafond.raphael.spinit.model.Liste;
 import com.tournafond.raphael.spinit.utils.ItemClickSupport;
 import com.tournafond.raphael.spinit.view.ListeViewModel;
 import com.tournafond.raphael.spinit.view.adapter.EditListeAdapter;
-import com.tournafond.raphael.spinit.view.adapter.MainListeAdapter;
 
 import java.util.List;
 
@@ -30,11 +29,9 @@ public class EditActivity extends AppCompatActivity implements EditListeAdapter.
     private ImageButton mBtnReturn;
     private RecyclerView mRecyclerView;
 
-    //FOR DATA
+    // FOR DATA
     private ListeViewModel mListeViewModel;
     private EditListeAdapter mEditListeAdapter;
-
-    private List<Liste> listes;
 
     public static final String BUNDLE_LISTE = "BUNDLE_LISTE";
 
@@ -53,6 +50,7 @@ public class EditActivity extends AppCompatActivity implements EditListeAdapter.
         //Animation
         final Animation zoom = AnimationUtils.loadAnimation(this, R.anim.zoom);
 
+        // recuperation de la recycler view
         mRecyclerView = findViewById(R.id.fragment_main_recycler_view);
 
         this.configureRecyclerView();
@@ -60,6 +58,7 @@ public class EditActivity extends AppCompatActivity implements EditListeAdapter.
 
         this.getListes();
 
+        // clic sur le bouton retour
         mBtnReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,6 +70,7 @@ public class EditActivity extends AppCompatActivity implements EditListeAdapter.
 
     // ACTIONS
 
+    // Clic sur le bouton favoris
     @Override
     public void onClickFavButton(int position) {
         Liste liste = this.mEditListeAdapter.getListe(position);
@@ -80,6 +80,7 @@ public class EditActivity extends AppCompatActivity implements EditListeAdapter.
         } else if (type == Liste.NORMAL) {
             liste.setType(Liste.FAVORI);
         }
+        // reaffichage
         this.mListeViewModel.updateListe(liste);
     }
 
@@ -114,6 +115,7 @@ public class EditActivity extends AppCompatActivity implements EditListeAdapter.
         finish();
     }
 
+    /* Accès à la modifiaction d'une liste */
     public void modifierListe(Liste liste) {
         Intent editListActivity = new Intent(EditActivity.this, EditListActivity.class);
         editListActivity.putExtra("Liste", liste);
@@ -135,10 +137,12 @@ public class EditActivity extends AppCompatActivity implements EditListeAdapter.
         this.mEditListeAdapter.updateData(listes);
     }
 
+    /* Lors de la récupération suite à la modification */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (EDIT_LISTE_REQUEST_CODE == requestCode && RESULT_OK == resultCode) {
+            // update de la liste
             getListes();
         }
     }

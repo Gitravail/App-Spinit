@@ -8,6 +8,9 @@ import com.tournafond.raphael.spinit.repositories.ListeDataRepository;
 
 import java.util.concurrent.Executor;
 
+// permet de deleguer la creation du ViewModel
+// cela nous permet de regrouper la creation des ViewModels si la creation d'un nouveau nous venait a l'esprit
+// pour le menu drawer par exemple
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
     private final ListeDataRepository listeDataSource;

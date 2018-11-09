@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
+// Afin de lancer la roulette via un onSwipeBottom (non implemente mais fonctionnel)
 public class OnSwipeListener implements OnTouchListener {
     private final GestureDetector gestureDetector;
 

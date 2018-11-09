@@ -17,6 +17,7 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+// holder (lien vue) de la recyclerview des listes
 public class ListeEditViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     @BindView(R.id.fragment_main_item_title) TextView mTextView;
@@ -27,6 +28,7 @@ public class ListeEditViewHolder extends RecyclerView.ViewHolder implements View
     // FOR DATA
     private WeakReference<EditListeAdapter.Listener> callbackWeakRef;
 
+    // recuperation des elements
     public ListeEditViewHolder(View itemView, Context context) {
         super(itemView);
         ButterKnife.bind(this, itemView);
@@ -35,6 +37,7 @@ public class ListeEditViewHolder extends RecyclerView.ViewHolder implements View
         this.context = context;
     }
 
+    // update de la vue
     public void updateWithListe(Liste liste, EditListeAdapter.Listener callback) {
 
         this.callbackWeakRef = new WeakReference<>(callback);
@@ -53,6 +56,7 @@ public class ListeEditViewHolder extends RecyclerView.ViewHolder implements View
         }
     }
 
+    // on click sur le bouton favoris
     @Override
     public void onClick(View view) {
         EditListeAdapter.Listener callback = callbackWeakRef.get();

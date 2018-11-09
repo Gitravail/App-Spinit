@@ -36,6 +36,7 @@ public abstract class SpinItDatabase extends RoomDatabase {
 
     // ---
 
+    // permet d'inserer des donnees de base
     private static Callback prepopulateDatabase(){
         return new Callback() {
 

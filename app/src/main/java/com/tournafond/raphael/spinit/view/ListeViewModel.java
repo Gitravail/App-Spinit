@@ -10,9 +10,11 @@ import com.tournafond.raphael.spinit.repositories.ListeDataRepository;
 import java.util.List;
 import java.util.concurrent.Executor;
 
+// view model de la recyclerview des lsites
 public class ListeViewModel extends ViewModel {
     // REPOSITORIES
     private final ListeDataRepository listeDataSource;
+    // Afin de faciliter l'execution en arriere plan
     private final Executor executor;
 
 
@@ -32,6 +34,8 @@ public class ListeViewModel extends ViewModel {
         return listeDataSource.getListes();
     }
 
+    // L'execution asynchrone permet d'eviter les ralentissements lors des requetes
+    // utile lorsque l'on charge un grand volume de donnees
     public void createListe(Liste liste) {
         executor.execute(() -> {
             listeDataSource.createListe(liste);

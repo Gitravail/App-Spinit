@@ -10,18 +10,22 @@ import com.tournafond.raphael.spinit.database.converter.ListConverter;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+// definition comme une entite de notre BDD
 @Entity
 public class Liste implements Serializable {
 
+    // cle primaire autogenere
     @PrimaryKey(autoGenerate = true)
     private long id;
     private int type;
     private String titre;
+    // permet de convertir les ArrayList vers des chaine JSON en entree de BDD et vice versa
     @TypeConverters(ListConverter.class)
     private ArrayList<String> action;
     @TypeConverters(ListConverter.class)
     private ArrayList<String> participant;
 
+    // types de liste
     public final static int VIDE = -1;
     public final static int FAVORI = 0;
     public final static int NORMAL = 1;

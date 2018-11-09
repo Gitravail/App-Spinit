@@ -240,6 +240,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // Gestion du choix ****************************************************************************
 
+    // Test validite de la liste
     private boolean listeValide() {
         if (mActionParticipant == ACTION || mActionParticipant == OPTION) {
             listeAction = mMainListeAdapter.getList();
@@ -270,6 +271,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void gereChoix() {
+        // si liste valide lance la roulette
         if (listeValide()) {
             lanceResult();
         }
@@ -363,6 +365,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .setNegativeButton("Non", deleteYesNo).show();
     }
 
+
+    // *********************************************************************************************
+
+    // lance la roulette
     private void lanceResult() {
         Intent wheelActivity = new Intent(MainActivity.this, RandomActivity.class);
         wheelActivity.putStringArrayListExtra("listeAction", listeAction);
@@ -373,6 +379,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(wheelActivity);
     }
 
+    // debut d'implementation du drawer
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
@@ -389,6 +396,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    // sauvegarde de la liste
     private void sauvegarderListe() {
         Liste liste = new Liste();
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -429,6 +437,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         alert.show();
     }
 
+    // insertion de la nouvelle liste
     private void insererListe(Liste liste) {
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
         ListeViewModel mListeViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ListeViewModel.class);
@@ -436,7 +445,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-
+    // une fois la liste charge depuis la liste de listes
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -455,6 +464,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    // permet de recuperer les liste bonus (juste en demo, elles sont vides)
     private void getBonusList() {
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
         ListeViewModel mListeViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ListeViewModel.class);
